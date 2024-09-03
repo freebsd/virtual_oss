@@ -25,7 +25,7 @@
 .\"
 .Dd September 3, 2024
 .Dt VIRTUAL_OSS 8
-.Os FreeBSD
+.Os
 .Sh NAME
 .Nm virtual_oss
 .Nd daemon to multiplex and demultiplex an OSS device
@@ -36,9 +36,9 @@
 .Nm
 is an audio mixing application that multiplexes and demultiplexes a
 single OSS device into multiple customizable OSS compatible devices
-using character devices from userspace. These devices can be used to
-record played back audio and mix the individual channels in multiple
-ways.
+using character devices from userspace.
+These devices can be used to record played back audio and mix the individual
+channels in multiple ways.
 .Pp
 .Nm
 requires the
@@ -108,8 +108,10 @@ Set default mute state of DSP device.
 A value of zero means unmuted.
 A value of one means muted.
 .It Fl m Ar rx_ch,tx_ch,....
-Set default channel mapping of DSP device, as a comma separated list of integers.
-The first integer selects the receive channel, the second value selects the transmit channel and then it repeats.
+Set default channel mapping of DSP device, as a comma separated list of
+integers.
+The first integer selects the receive channel, the second value selects the
+transmit channel and then it repeats.
 A value of zero indicates the first receive or transmit channel.
 .It Fl C Ar num
 Set the maximum number of mix channels to
@@ -122,11 +124,14 @@ The filter consists of a list of comma separated arguments.
 The first argument indicates the type of monitoring filter:
 .Bl -tag -width indent
 .It i
-Feedback one mix input channel into another mix output channel, for remote feedback.
+Feedback one mix input channel into another mix output channel, for remote
+feedback.
 .It o
-Add one mix output channel into another mix output channel, for creating a mix of multiple output channels.
+Add one mix output channel into another mix output channel, for creating a mix
+of multiple output channels.
 .It x
-Feedback one mix output channel into another mix input channel, for local feedback.
+Feedback one mix output channel into another mix input channel, for local
+feedback.
 .El
 The second argument gives the source mix channel.
 The third argument gives the destination mix channel.
@@ -140,7 +145,8 @@ Set playback DSP device only.
 Specifying /dev/null is magic and means no playback device.
 Specifying a
 .Xr sndio 7
-device descriptor prefixed by "/dev/sndio/" is also magic, and will use a sndio backend rather than an OSS device.
+device descriptor prefixed by "/dev/sndio/" is also magic, and will use a sndio
+backend rather than an OSS device.
 .It Fl O Ar devname
 Set playback DSP device only which acts as a master device.
 This option is used in conjunction with -R /dev/null .
@@ -162,9 +168,11 @@ Create a loopback OSS device by given name.
 Create a loopback OSS device which acts as a master device.
 This option is used in conjunction with -f /dev/null .
 .It Fl F Ar size
-Set receive filter size in number of samples or <milliseconds>ms for the next device to be created.
+Set receive filter size in number of samples or <milliseconds>ms for the next
+device to be created.
 .It Fl G Ar size
-Set transmit filter size in number of samples or <milliseconds>ms for the next device to be created.
+Set transmit filter size in number of samples or <milliseconds>ms for the next
+device to be created.
 .It Fl D Ar file
 Write process ID of virtual_oss to file.
 .It Fl g Ar knee,attack,decay
@@ -196,7 +204,6 @@ Show usage and all available options.
 .El
 .Sh EXAMPLES
 Split a 2-channel OSS compatible sound device into multiple subdevices:
-.Pp
 .Bd -literal -offset indent
 virtual_oss \\
 	-S \\
@@ -331,11 +338,9 @@ done
 
 sysctl kern.sched.preempt_thresh=224
 .Ed
-.Pp
 .Sh NOTES
 All character devices are created using the 0666 mode which gives
 everyone in the system access.
-.Sh FILES
 .Sh SEE ALSO
 .Xr sysctl 8 ,
 .Xr virtual_bt_speaker 8 ,
@@ -347,4 +352,3 @@ and
 .Nm
 was written by
 .An Hans Petter Selasky hselasky@freebsd.org .
-.Pp
