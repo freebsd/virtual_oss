@@ -34,7 +34,7 @@ PTHREAD_LIBS?= -lpthread
 PREFIX?=        /usr/local
 LOCALBASE?=     /usr/local
 BINDIR=         ${PREFIX}/sbin
-MANDIR=         ${PREFIX}/man/man
+MANDIR=         ${PREFIX}/share/man/man
 LIBDIR=         ${PREFIX}/lib
 
 SRCS= \
