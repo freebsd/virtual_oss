@@ -1,5 +1,9 @@
 #
 # Copyright (c) 2012-2023 Hans Petter Selasky. All rights reserved.
+# Copyright (c) 2024 The FreeBSD Foundation
+#
+# Portions of this software were developed by Christos Margiolis
+# <christos@FreeBSD.org> under sponsorship from the FreeBSD Foundation.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -21,90 +25,86 @@
 # LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
-#
-#
-# Makefile for virtual_oss
-#
 
 .PATH: . backend_oss backend_bt backend_null backend_sndio command equalizer frontend_http
 
-PROG=virtual_oss
-MAN=${PROG}.8
-PTHREAD_LIBS?= -lpthread
-PREFIX?=        /usr/local
-LOCALBASE?=     /usr/local
-BINDIR=         ${PREFIX}/sbin
-MANDIR=         ${PREFIX}/share/man/man
-LIBDIR=         ${PREFIX}/lib
+PROG=		virtual_oss
+MAN=		${PROG}.8
+PTHREAD_LIBS?=	-lpthread
+PREFIX?=	/usr/local
+LOCALBASE?=	/usr/local
+BINDIR=		${PREFIX}/sbin
+MANDIR=		${PREFIX}/share/man/man
+LIBDIR=		${PREFIX}/lib
 
-SRCS= \
-virtual_audio_delay.c \
-virtual_compressor.c \
-virtual_ctl.c \
-virtual_eq.c \
-virtual_format.c \
-virtual_main.c \
-virtual_mul.c \
-virtual_oss.c \
-virtual_ring.c \
-backend_oss.c \
-backend_null.c
+SRCS=	\
+	virtual_audio_delay.c \
+	virtual_compressor.c \
+	virtual_ctl.c \
+	virtual_eq.c \
+	virtual_format.c \
+	virtual_main.c \
+	virtual_mul.c \
+	virtual_oss.c \
+	virtual_ring.c \
+	backend_oss.c \
+	backend_null.c
 
 .if defined(HAVE_SNDSTAT)
-CFLAGS += -DHAVE_SNDSTAT
-LDFLAGS += -lnv
+CFLAGS+=	-DHAVE_SNDSTAT
+LDFLAGS+= 	-lnv
 .endif
 
 .if defined(HAVE_BLUETOOTH)
-SRCS += backend_bt.c avdtp.c sbc_encode.c
-CFLAGS += -DHAVE_BLUETOOTH
-LDFLAGS += -lbluetooth -lsdp
+SRCS+=		backend_bt.c avdtp.c sbc_encode.c
+CFLAGS+=	-DHAVE_BLUETOOTH
+LDFLAGS+=	-lbluetooth -lsdp
 .endif
 
 .if defined(HAVE_BLUETOOTH) && defined(HAVE_BLUETOOTH_SPEAKER)
-SRCS += bt_speaker.c
-CFLAGS += -DHAVE_BLUETOOTH_SPEAKER
-LINKS += ${BINDIR}/virtual_oss ${BINDIR}/virtual_bt_speaker
-MAN += virtual_bt_speaker.8
+SRCS+=		bt_speaker.c
+CFLAGS+= 	-DHAVE_BLUETOOTH_SPEAKER
+LINKS+= 	${BINDIR}/virtual_oss ${BINDIR}/virtual_bt_speaker
+MAN+= 		virtual_bt_speaker.8
 .endif
 
 .if defined(HAVE_SNDIO)
-SRCS += backend_sndio.c
-CFLAGS += -DHAVE_SNDIO
-LDFLAGS += -lsndio
+SRCS+=		backend_sndio.c
+CFLAGS+= 	-DHAVE_SNDIO
+LDFLAGS+=	-lsndio
 .endif
 
 .if defined(HAVE_EQUALIZER)
-SRCS += virtual_equalizer.c
-CFLAGS += -DHAVE_EQUALIZER
-LDFLAGS += -lfftw3
-LINKS += ${BINDIR}/virtual_oss ${BINDIR}/virtual_equalizer
-MAN += virtual_equalizer.8
+SRCS+=		virtual_equalizer.c
+CFLAGS+= 	-DHAVE_EQUALIZER
+LDFLAGS+= 	-lfftw3
+LINKS+= 	${BINDIR}/virtual_oss ${BINDIR}/virtual_equalizer
+MAN+= 		virtual_equalizer.8
 .endif
 
 .if defined(HAVE_COMMAND)
-SRCS += virtual_command.c
-CFLAGS += -DHAVE_COMMAND
-LINKS += ${BINDIR}/virtual_oss ${BINDIR}/virtual_oss_cmd
-MAN += virtual_oss_cmd.8
+SRCS+=		virtual_command.c
+CFLAGS+= 	-DHAVE_COMMAND
+LINKS+= 	${BINDIR}/virtual_oss ${BINDIR}/virtual_oss_cmd
+MAN+= 		virtual_oss_cmd.8
 .endif
 
 .if defined(HAVE_FFMPEG)
-CFLAGS += -DHAVE_FFMPEG
-LDFLAGS += -lavdevice -lavutil -lavcodec -lavresample -lavformat
+CFLAGS+=	-DHAVE_FFMPEG
+LDFLAGS+= 	-lavdevice -lavutil -lavcodec -lavresample -lavformat
 .endif
 
 .if defined(HAVE_HTTPD)
-SRCS += virtual_httpd.c
-CFLAGS += -DHAVE_HTTPD
+SRCS+=		virtual_httpd.c
+CFLAGS+=	-DHAVE_HTTPD
 .endif
 
 .if defined(HAVE_DEBUG)
-DEBUG_FLAGS=-g -O0
+DEBUG_FLAGS=	-g -O0
 .endif
 
-CFLAGS += -I${LOCALBASE}/include
-LDFLAGS += -L${LIBDIR} ${PTHREAD_LIBS} -lm -lsamplerate -lcuse
+CFLAGS+= 	-I${LOCALBASE}/include
+LDFLAGS+= 	-L${LIBDIR} ${PTHREAD_LIBS} -lm -lsamplerate -lcuse
 
 .include <bsd.prog.mk>
 
