@@ -23,7 +23,7 @@
 .\" SUCH DAMAGE.
 .\"
 .\"
-.Dd November 27, 2022
+.Dd September 3, 2024
 .Dt VIRTUAL_OSS 8
 .Os FreeBSD
 .Sh NAME
@@ -221,8 +221,7 @@ sysctl dev.pcm.X.play.vchanformat=s24le:7.1
 sysctl dev.pcm.X.play.vchanrate=48000
 sysctl dev.pcm.X.bitperfect=1
 
-mixer -f /dev/mixerX -s vol 100
-mixer -f /dev/mixerX -s pcm 100
+mixer vol.volume=1 pcm.volume=1
 
 virtual_oss \\
 	-S \\
