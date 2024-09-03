@@ -180,10 +180,10 @@ struct virtual_client {
 	int	tx_volume;
 	int	type;		/* VTYPE_XXX */
 	int	sample_rate;
-	int	buffer_size_set:1;
-	int	buffer_frags_set:1;
-	int	sync_busy:1;
-	int	sync_wakeup:1;
+	uint32_t buffer_size_set:1;
+	uint32_t buffer_frags_set:1;
+	uint32_t sync_busy:1;
+	uint32_t sync_wakeup:1;
 	int	padding:28;
 };
 
