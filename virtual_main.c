@@ -1772,7 +1772,6 @@ init_sndstat(vprofile_t *ptr)
 {
 #if defined(HAVE_SNDSTAT) && defined(SNDST_DSPS_PROVIDER)
 	int err;
-	int unit;
 	nvlist_t *nvl;
 	nvlist_t *di = NULL, *dichild;
 	struct sndstioc_nv_arg arg;
@@ -1815,20 +1814,9 @@ init_sndstat(vprofile_t *ptr)
 	nvlist_add_nvlist(di, SNDST_DSPS_INFO_PLAY, dichild);
 	nvlist_add_nvlist(di, SNDST_DSPS_INFO_REC, dichild);
 
-	if (sscanf(ptr->oss_name, "dsp%d", &unit) == 1) {
-		nvlist_add_stringf(di, SNDST_DSPS_DEVNODE,
-		    "pcm%d", unit);
-		nvlist_append_nvlist_array(nvl, SNDST_DSPS, di);
-		if (nvlist_error(di) == 0) {
-			nvlist_free_string(di, SNDST_DSPS_DEVNODE);
-			nvlist_add_string(di, SNDST_DSPS_DEVNODE, ptr->oss_name);
-			nvlist_append_nvlist_array(nvl, SNDST_DSPS, di);
-		}
-	} else {
-		nvlist_add_string(di, SNDST_DSPS_DEVNODE,
-		    ptr->oss_name);
-		nvlist_append_nvlist_array(nvl, SNDST_DSPS, di);
-	}
+	nvlist_add_string(di, SNDST_DSPS_DEVNODE,
+	    ptr->oss_name);
+	nvlist_append_nvlist_array(nvl, SNDST_DSPS, di);
 
 	if (nvlist_error(nvl)) {
 		warn("Failed building nvlist");
@@ -1853,18 +1841,9 @@ done:
 	nvlist_destroy(nvl);
 #else /* HAVE_SNDSTAT */
 	char temp[128];
-	int unit;
 
-	if (sscanf(ptr->oss_name, "dsp%d", &unit) == 1) {
-		snprintf(temp, sizeof(temp),
-		    "pcm%d: <Virtual OSS> (play/rec)\n"
-		    "%s: <Virtual OSS> (play/rec)\n",
-		    unit, ptr->oss_name);
-	} else {
-		snprintf(temp, sizeof(temp),
-		    "%s: <Virtual OSS> (play/rec)\n",
-		    ptr->oss_name);
-	}
+	snprintf(temp, sizeof(temp), "%s: <Virtual OSS> (play/rec)\n",
+	    ptr->oss_name);
 	if (write(ptr->fd_sta, temp, strlen(temp)) != (int)strlen(temp)) {
 		warn("Could not register virtual OSS device");
 		close(ptr->fd_sta);
