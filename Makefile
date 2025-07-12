@@ -58,8 +58,8 @@ SRCS+=	samplerate.c \
 	src_zoh.c
 CFLAGS+=	-DENABLE_SINC_BEST_CONVERTER \
 		-DENABLE_SINC_MEDIUM_CONVERTER \
-		-DENABLE_SINC_FAST_CONVERTER
-CPPFLAGS+=	-Icontrib/libsamplerate
+		-DENABLE_SINC_FAST_CONVERTER \
+		-Icontrib/libsamplerate
 
 .if defined(HAVE_SNDSTAT)
 CFLAGS+=	-DHAVE_SNDSTAT
