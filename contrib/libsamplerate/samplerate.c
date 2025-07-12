@@ -27,6 +27,7 @@ src_new (int converter_type, int channels, int *error)
 	return psrc_set_converter (converter_type, channels, error) ;
 } /* src_new */
 
+#if 0
 SRC_STATE*
 src_clone (SRC_STATE* orig, int *error)
 {
@@ -71,6 +72,7 @@ src_callback_new (src_callback_t func, int converter_type, int channels, int *er
 
 	return state ;
 } /* src_callback_new */
+#endif
 
 SRC_STATE *
 src_delete (SRC_STATE *state)
@@ -142,6 +144,7 @@ src_process (SRC_STATE *state, SRC_DATA *data)
 	return error ;
 } /* src_process */
 
+#if 0
 long
 src_callback_read (SRC_STATE *state, double src_ratio, long frames, float *data)
 {
@@ -481,6 +484,7 @@ src_float_to_int_array (const float *in, int *out, int len)
 		} ;
 
 } /* src_float_to_int_array */
+#endif
 
 /*==============================================================================
 **	Private functions.

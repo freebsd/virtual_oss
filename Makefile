@@ -27,6 +27,7 @@
 # SUCH DAMAGE.
 
 .PATH: . backend_oss backend_bt backend_null backend_sndio
+.PATH: contrib/libsamplerate
 
 PROG=		virtual_oss
 MAN=		${PROG}.8
@@ -49,6 +50,16 @@ SRCS=	\
 	virtual_ring.c \
 	backend_oss.c \
 	backend_null.c
+
+# libsamplerate
+SRCS+=	samplerate.c \
+	src_linear.c \
+	src_sinc.c \
+	src_zoh.c
+CFLAGS+=	-DENABLE_SINC_BEST_CONVERTER \
+		-DENABLE_SINC_MEDIUM_CONVERTER \
+		-DENABLE_SINC_FAST_CONVERTER
+CPPFLAGS+=	-Icontrib/libsamplerate
 
 .if defined(HAVE_SNDSTAT)
 CFLAGS+=	-DHAVE_SNDSTAT
@@ -104,7 +115,7 @@ DEBUG_FLAGS=	-g -O0
 .endif
 
 CFLAGS+= 	-I${LOCALBASE}/include
-LDFLAGS+= 	-L${LIBDIR} ${PTHREAD_LIBS} -lm -lsamplerate -lcuse
+LDFLAGS+= 	-L${LIBDIR} ${PTHREAD_LIBS} -lm -lcuse
 
 .include <bsd.prog.mk>
 

@@ -27,7 +27,7 @@
 #define	_VIRTUAL_INT_H_
 
 #include <signal.h>
-#include <samplerate.h>
+#include "samplerate.h"
 
 #define	VMAX_CHAN 64
 #define	VMAX_STRING 64	/* characters */

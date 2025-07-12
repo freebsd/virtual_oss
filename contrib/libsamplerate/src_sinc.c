@@ -164,6 +164,7 @@ int_div_ceil (int divident, int divisor) /* == (int) ceil ((float) divident / di
 /*----------------------------------------------------------------------------------------
 */
 
+#if 0
 LIBSAMPLERATE_DLL_PRIVATE const char*
 sinc_get_name (int src_enum)
 {
@@ -202,6 +203,7 @@ sinc_get_description (int src_enum)
 
 	return NULL ;
 } /* sinc_get_descrition */
+#endif
 
 static SINC_FILTER *
 sinc_filter_new (int converter_type, int channels)

@@ -155,6 +155,7 @@ linear_vari_process (SRC_STATE *state, SRC_DATA *data)
 /*------------------------------------------------------------------------------
 */
 
+#if 0
 LIBSAMPLERATE_DLL_PRIVATE const char*
 linear_get_name (int src_enum)
 {
@@ -172,6 +173,7 @@ linear_get_description (int src_enum)
 
 	return NULL ;
 } /* linear_get_descrition */
+#endif
 
 static LINEAR_DATA *
 linear_data_new (int channels)

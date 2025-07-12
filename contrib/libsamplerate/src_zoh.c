@@ -144,6 +144,7 @@ zoh_vari_process (SRC_STATE *state, SRC_DATA *data)
 /*------------------------------------------------------------------------------
 */
 
+#if 0
 LIBSAMPLERATE_DLL_PRIVATE const char*
 zoh_get_name (int src_enum)
 {
@@ -161,6 +162,7 @@ zoh_get_description (int src_enum)
 
 	return NULL ;
 } /* zoh_get_descrition */
+#endif
 
 static ZOH_DATA *
 zoh_data_new (int channels)
