@@ -1,4 +1,3 @@
-<IMG SRC="https://raw.githubusercontent.com/hselasky/virtual_oss/main/www/virtual_oss.svg" WIDTH="10%"></IMG> 
 # Virtual OSS
 Virtual OSS is an audio mixing application that multiplexes and
 demultiplexes a single OSS device into multiple customizable OSS
