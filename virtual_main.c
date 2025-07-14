@@ -23,15 +23,13 @@
  * SUCH DAMAGE.
  */
 
-#ifdef HAVE_SNDSTAT
-#include <sys/nv.h>
-#include <sys/sndstat.h>
-#endif
-#include <sys/soundcard.h>
 #include <sys/queue.h>
 #include <sys/types.h>
 #include <sys/filio.h>
 #include <sys/rtprio.h>
+#include <sys/nv.h>
+#include <sys/sndstat.h>
+#include <sys/soundcard.h>
 
 #include <stdio.h>
 #include <stdint.h>
@@ -1659,10 +1657,8 @@ voss_rx_backend_refresh(void)
   	/* setup RX backend */
 	if (strcmp(voss_dsp_rx_device, "/dev/null") == 0) {
 		voss_rx_backend = &voss_backend_null_rec;
-#ifdef HAVE_BLUETOOTH
 	} else if (strstr(voss_dsp_rx_device, "/dev/bluetooth/") == voss_dsp_rx_device) {
 		voss_rx_backend = &voss_backend_bt_rec;
-#endif
 #ifdef HAVE_SNDIO
 	} else if (strstr(voss_dsp_rx_device, "/dev/sndio/") == voss_dsp_rx_device) {
 		voss_rx_backend = &voss_backend_sndio_rec;
@@ -1678,10 +1674,8 @@ voss_tx_backend_refresh(void)
   	/* setup TX backend */
 	if (strcmp(voss_dsp_tx_device, "/dev/null") == 0) {
 		voss_tx_backend = &voss_backend_null_play;
-#ifdef HAVE_BLUETOOTH
 	} else if (strstr(voss_dsp_tx_device, "/dev/bluetooth/") == voss_dsp_tx_device) {
 		voss_tx_backend = &voss_backend_bt_play;
-#endif
 #ifdef HAVE_SNDIO
 	} else if (strstr(voss_dsp_tx_device, "/dev/sndio/") == voss_dsp_tx_device) {
 		voss_tx_backend = &voss_backend_sndio_play;
@@ -1729,13 +1723,11 @@ usage(void)
 	    "\t" "-F <rx_filter_samples> or <milliseconds>ms \\\n"
 	    "\t" "-G <tx_filter_samples> or <milliseconds>ms \\\n"
 	    "\t" "-E <enable_recording, 0 or 1> \\\n"
-#ifdef HAVE_HTTPD
 	    "\t" "-N <max HTTP connections, default is 1> \\\n"
 	    "\t" "-H <bind HTTP server to this host> \\\n"
 	    "\t" "-o <bind HTTP server to this port, default is 80> \\\n"
 	    "\t" "-J <bind RTP server to this network interface> \\\n"
 	    "\t" "-k <bind RTP server to this port, default is 8080> \\\n"
-#endif
 	    "\t" "-t vdsp.ctl \n"
 	    "\t" "Left channel = 0\n"
 	    "\t" "Right channel = 1\n"
@@ -1773,7 +1765,6 @@ init_mapping(struct virtual_profile *pvp)
 static void
 init_sndstat(vprofile_t *ptr)
 {
-#if defined(HAVE_SNDSTAT) && defined(SNDST_DSPS_PROVIDER)
 	int err;
 	nvlist_t *nvl;
 	nvlist_t *di = NULL, *dichild;
@@ -1842,17 +1833,6 @@ done:
 	nvlist_destroy(di);
 	nvlist_destroy(dichild);
 	nvlist_destroy(nvl);
-#else /* HAVE_SNDSTAT */
-	char temp[128];
-
-	snprintf(temp, sizeof(temp), "%s: <Virtual OSS> (play/rec)\n",
-	    ptr->oss_name);
-	if (write(ptr->fd_sta, temp, strlen(temp)) != (int)strlen(temp)) {
-		warn("Could not register virtual OSS device");
-		close(ptr->fd_sta);
-		ptr->fd_sta = -1;
-	}
-#endif /* HAVE_SNDSTAT */
 }
 
 static const char *
@@ -1960,11 +1940,7 @@ dup_profile(vprofile_t *pvp, int *pamp, int pol, int rx_mute,
 	/* need to set new compressor parameters next time */
 	init_compressor(pvp);
 
-#ifdef HAVE_HTTPD
 	return (voss_httpd_start(ptr));
-#else
-	return (NULL);
-#endif
 }
 
 static void
@@ -2452,7 +2428,6 @@ parse_options(int narg, char **pparg, int is_main)
 			if (profile.tx_filter_size > VIRTUAL_OSS_FILTER_MAX)
 				return ("Invalid -F parameter is out of range");
 			break;
-#ifdef HAVE_HTTPD
 		case 'N':
 			profile.http.nstate = atoi(optarg);
 			break;
@@ -2474,7 +2449,6 @@ parse_options(int narg, char **pparg, int is_main)
 		case 'k':
 			profile.http.rtp_port = optarg;
 			break;
-#endif
 		default:
 			if (is_main)
 				usage();
@@ -2563,23 +2537,11 @@ int
 main(int argc, char **argv)
 {
 	if (argc > 0 && ends_with(argv[0], "virtual_bt_speaker")) {
-#ifdef HAVE_BLUETOOTH_SPEAKER
 		return (bt_speaker_main(argc, argv));
-#else
-		return (EX_USAGE);
-#endif
 	} else if (argc > 0 && ends_with(argv[0], "virtual_equalizer")) {
-#ifdef HAVE_EQUALIZER
 		return (equalizer_main(argc, argv));
-#else
-		return (EX_USAGE);
-#endif
 	} else if (argc > 0 && ends_with(argv[0], "virtual_oss_cmd")) {
-#ifdef HAVE_COMMAND
 		return (command_main(argc, argv));
-#else
-		return (EX_USAGE);
-#endif
 	}
 
 	const char *ptrerr;

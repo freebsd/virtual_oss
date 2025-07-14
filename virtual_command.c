@@ -33,8 +33,8 @@
 #include <stdarg.h>
 #include <fcntl.h>
 
-#include "../virtual_utils.h"
-#include "../virtual_oss.h"
+#include "virtual_utils.h"
+#include "virtual_oss.h"
 
 static void
 message(const char *fmt, ...)

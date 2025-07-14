@@ -43,8 +43,8 @@
 #include <sysexits.h>
 #include <unistd.h>
 
-#include "../virtual_utils.h"
-#include "../virtual_oss.h"
+#include "virtual_utils.h"
+#include "virtual_oss.h"
 
 struct Equalizer {
 	double	rate;

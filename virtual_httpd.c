@@ -55,7 +55,7 @@
 
 #include <pthread.h>
 
-#include "../virtual_int.h"
+#include "virtual_int.h"
 
 #define	VOSS_HTTPD_BIND_MAX 8
 #define	VOSS_HTTPD_MAX_STREAM_TIME (60 * 60 * 3)	/* seconds */
