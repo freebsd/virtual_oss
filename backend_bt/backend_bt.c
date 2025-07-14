@@ -25,6 +25,10 @@
  * SUCH DAMAGE.
  */
 
+#include <sys/queue.h>
+#include <sys/filio.h>
+#include <sys/soundcard.h>
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -35,10 +39,6 @@
 #define	L2CAP_SOCKET_CHECKED
 #include <bluetooth.h>
 #include <sdp.h>
-
-#include <sys/queue.h>
-#include <sys/filio.h>
-#include <sys/soundcard.h>
 
 #include "../virtual_int.h"
 #include "../virtual_backend.h"

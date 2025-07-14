@@ -28,13 +28,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdio.h>
-
 #include <sys/cdefs.h>
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/endian.h>
 #include <sys/uio.h>
+
+#include <stdio.h>
 #include <errno.h>
 #include <stdbool.h>
 #include <stdlib.h>

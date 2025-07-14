@@ -23,6 +23,10 @@
  * SUCH DAMAGE.
  */
 
+#include <sys/queue.h>
+#include <sys/types.h>
+#include <sys/soundcard.h>
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -31,11 +35,6 @@
 #include <err.h>
 #include <time.h>
 #include <assert.h>
-
-#include <sys/queue.h>
-#include <sys/types.h>
-
-#include <sys/soundcard.h>
 
 #include "virtual_int.h"
 #include "virtual_backend.h"

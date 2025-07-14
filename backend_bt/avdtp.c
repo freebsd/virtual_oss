@@ -32,13 +32,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <sys/uio.h>
+
 #include <stdio.h>
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
-#include <sys/uio.h>
 
 #include "avdtp_signal.h"
 #include "backend_bt.h"

@@ -23,6 +23,8 @@
  * SUCH DAMAGE.
  */
 
+#include <sys/queue.h>
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -31,8 +33,6 @@
 #include <err.h>
 #include <math.h>
 #include <sysexits.h>
-
-#include <sys/queue.h>
 
 #include "virtual_int.h"
 

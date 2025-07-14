@@ -23,6 +23,16 @@
  * SUCH DAMAGE.
  */
 
+#ifdef HAVE_SNDSTAT
+#include <sys/nv.h>
+#include <sys/sndstat.h>
+#endif
+#include <sys/soundcard.h>
+#include <sys/queue.h>
+#include <sys/types.h>
+#include <sys/filio.h>
+#include <sys/rtprio.h>
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -33,16 +43,6 @@
 #include <signal.h>
 #include <fcntl.h>
 #include <paths.h>
-
-#ifdef HAVE_SNDSTAT
-#include <sys/nv.h>
-#include <sys/sndstat.h>
-#endif
-#include <sys/soundcard.h>
-#include <sys/queue.h>
-#include <sys/types.h>
-#include <sys/filio.h>
-#include <sys/rtprio.h>
 
 #include <cuse.h>
 #include <pthread.h>

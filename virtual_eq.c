@@ -23,12 +23,12 @@
  * SUCH DAMAGE.
  */
 
+#include <sys/queue.h>
+
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
-
-#include <sys/queue.h>
 
 #include "virtual_int.h"
 

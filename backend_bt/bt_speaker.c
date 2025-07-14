@@ -23,6 +23,10 @@
  * SUCH DAMAGE.
  */
 
+#include <sys/types.h>
+#include <sys/rtprio.h>
+#include <sys/soundcard.h>
+
 #include <err.h>
 #include <fcntl.h>
 #include <stdarg.h>
@@ -30,9 +34,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/rtprio.h>
-#include <sys/soundcard.h>
 #include <sysexits.h>
 #include <time.h>
 #include <unistd.h>

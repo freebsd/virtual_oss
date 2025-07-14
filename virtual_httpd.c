@@ -23,6 +23,14 @@
  * SUCH DAMAGE.
  */
 
+#include <sys/types.h>
+#include <sys/queue.h>
+#include <sys/ioctl.h>
+#include <sys/socket.h>
+#include <sys/endian.h>
+#include <sys/uio.h>
+#include <sys/soundcard.h>
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -34,14 +42,6 @@
 #include <errno.h>
 #include <poll.h>
 #include <sysexits.h>
-
-#include <sys/types.h>
-#include <sys/queue.h>
-#include <sys/ioctl.h>
-#include <sys/socket.h>
-#include <sys/endian.h>
-#include <sys/uio.h>
-#include <sys/soundcard.h>
 
 #include <netdb.h>
 #include <netinet/in.h>

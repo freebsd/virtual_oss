@@ -23,6 +23,10 @@
  * SUCH DAMAGE.
  */
 
+#include <sys/queue.h>
+#include <sys/filio.h>
+#include <sys/soundcard.h>
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,10 +34,6 @@
 #include <unistd.h>
 #include <err.h>
 #include <poll.h>
-
-#include <sys/queue.h>
-#include <sys/filio.h>
-#include <sys/soundcard.h>
 
 #include "../virtual_int.h"
 #include "../virtual_backend.h"
