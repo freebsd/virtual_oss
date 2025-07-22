@@ -59,10 +59,6 @@
 
 struct virtual_profile;
 
-#if 0
-{
-#endif
-
 typedef TAILQ_ENTRY(virtual_profile) vprofile_entry_t;
 typedef TAILQ_HEAD(, virtual_profile) vprofile_head_t;
 typedef struct virtual_profile vprofile_t;
@@ -80,10 +76,6 @@ typedef struct virtual_monitor vmonitor_t;
 
 struct virtual_resample;
 typedef struct virtual_resample vresample_t;
-
-#if 0
-}
-#endif
 
 struct cuse_methods;
 
