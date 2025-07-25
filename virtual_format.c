@@ -75,7 +75,9 @@ format_import(uint32_t fmt, const uint8_t *src, uint32_t len,
 		}
 	} else if (fmt & AFMT_32BIT) {
 		while (src < end) {
-			if (fmt & (AFMT_S32_LE | AFMT_U32_LE))
+			int64_t e, m, s;
+
+			if (fmt & (AFMT_S32_LE | AFMT_U32_LE | AFMT_F32_LE))
 				val = src[0] | (src[1] << 8) | (src[2] << 16) | (src[3] << 24);
 			else
 				val = src[3] | (src[2] << 8) | (src[1] << 16) | (src[0] << 24);
@@ -85,6 +87,28 @@ format_import(uint32_t fmt, const uint8_t *src, uint32_t len,
 			if (fmt & (AFMT_U32_LE | AFMT_U32_BE))
 				val = val ^ 0x80000000LL;
 
+			if (fmt & (AFMT_F32_LE | AFMT_F32_BE)) {
+				e = (val >> 23) & 0xff;
+				/* NaN, +/- Inf  or too small */
+				if (e == 0xff || e < 96) {
+					val = 0;
+					goto skip;
+				}
+				s = val & 0x80000000U;
+				if (e > 126) {
+					val = s == 0 ? format_max(fmt) :
+					    -0x80000000LL;
+					goto skip;
+				}
+				m = 0x800000 | (val & 0x7fffff);
+				e += 8 - 127;
+				if (e < 0)
+					m >>= -e;
+				else
+					m <<= e;
+				val = s == 0 ? m : -m;
+			}
+skip:
 			val <<= (64 - 32);
 			val >>= (64 - 32);
 
@@ -165,6 +189,7 @@ format_export(uint32_t fmt, const int64_t *src, uint8_t *dst, uint32_t len)
 		}
 	} else if (fmt & AFMT_32BIT) {
 		while (dst != end) {
+			int64_t r, e;
 
 			val = *src++;
 
@@ -173,10 +198,38 @@ format_export(uint32_t fmt, const int64_t *src, uint8_t *dst, uint32_t len)
 			else if (val < -0x7FFFFFFFLL)
 				val = -0x7FFFFFFFLL;
 
+			if (fmt & (AFMT_F32_LE | AFMT_F32_BE)) {
+				if (val == 0)
+					r = 0;
+				else if (val == format_max(fmt))
+					r = 0x3f800000;
+				else if (val == -0x80000000LL)
+					r = 0x80000000U | 0x3f800000;
+				else {
+					r = 0;
+					if (val < 0) {
+						r |= 0x80000000U;
+						val = -val;
+					}
+					e = 127 - 8;
+					while ((val & 0x7f000000) != 0) {
+						val >>= 1;
+						e++;
+					}
+					while ((val & 0x7f800000) == 0) {
+						val <<= 1;
+						e--;
+					}
+					r |= (e & 0xff) << 23;
+					r |= val & 0x7fffff;
+				}
+				val = r;
+			}
+
 			if (fmt & (AFMT_U32_LE | AFMT_U32_BE))
 				val = val ^ 0x80000000LL;
 
-			if (fmt & (AFMT_S32_LE | AFMT_U32_LE)) {
+			if (fmt & (AFMT_S32_LE | AFMT_U32_LE | AFMT_F32_LE)) {
 				dst[0] = val;
 				dst[1] = val >> 8;
 				dst[2] = val >> 16;
@@ -346,7 +399,7 @@ format_silence(uint32_t fmt, uint8_t *dst, uint32_t len)
 			val = 0;
 
 		while (dst != end) {
-			if (fmt & (AFMT_S32_LE | AFMT_U32_LE)) {
+			if (fmt & (AFMT_S32_LE | AFMT_U32_LE | AFMT_F32_LE)) {
 				dst[0] = val;
 				dst[1] = val >> 8;
 				dst[2] = val >> 16;

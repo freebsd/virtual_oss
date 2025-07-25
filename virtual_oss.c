@@ -299,7 +299,8 @@ virtual_oss_process(void *arg)
 		case 32:
 			rx_fmt = tx_fmt =
 			    AFMT_S32_BE | AFMT_S32_LE |
-			    AFMT_U32_BE | AFMT_U32_LE;
+			    AFMT_U32_BE | AFMT_U32_LE |
+			    AFMT_F32_BE | AFMT_F32_LE;
 			break;
 		default:
 			rx_fmt = tx_fmt = 0;
