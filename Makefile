@@ -39,24 +39,24 @@ MANDIR=		${PREFIX}/share/man/man
 LIBDIR=		${PREFIX}/lib
 
 SRCS=	\
+	audio_delay.c \
 	avdtp.c \
 	backend_bt.c \
 	backend_null.c \
 	backend_oss.c \
 	bt_speaker.c \
+	command.c \
+	compressor.c \
+	ctl.c \
+	eq.c \
+	equalizer.c \
+	format.c \
+	httpd.c \
+	main.c \
+	mul.c \
+	ring.c \
 	sbc_encode.c \
-	virtual_audio_delay.c \
-	virtual_command.c \
-	virtual_compressor.c \
-	virtual_ctl.c \
-	virtual_eq.c \
-	virtual_equalizer.c \
-	virtual_format.c \
-	virtual_httpd.c \
-	virtual_main.c \
-	virtual_mul.c \
-	virtual_oss.c \
-	virtual_ring.c
+	virtual_oss.c
 
 CFLAGS+= 	-I${LOCALBASE}/include
 

@@ -45,10 +45,10 @@
 #include <cuse.h>
 #include <pthread.h>
 
-#include "virtual_utils.h"
-#include "virtual_int.h"
+#include "backend.h"
+#include "int.h"
+#include "utils.h"
 #include "virtual_oss.h"
-#include "virtual_backend.h"
 
 static pthread_mutex_t atomic_mtx;
 static pthread_cond_t atomic_cv;

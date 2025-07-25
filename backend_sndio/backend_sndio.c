@@ -32,8 +32,8 @@
 
 #include <sndio.h>
 
-#include "../virtual_int.h"
-#include "../virtual_backend.h"
+#include "../backend.h"
+#include "../int.h"
 
 static struct sio_hdl *
 get_sio_hdl(struct voss_backend *pbe)

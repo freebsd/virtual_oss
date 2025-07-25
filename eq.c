@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#include "virtual_int.h"
+#include "int.h"
 
 void
 vclient_tx_equalizer(struct virtual_client *pvc,

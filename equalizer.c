@@ -43,7 +43,7 @@
 #include <sysexits.h>
 #include <unistd.h>
 
-#include "virtual_utils.h"
+#include "utils.h"
 #include "virtual_oss.h"
 
 struct Equalizer {

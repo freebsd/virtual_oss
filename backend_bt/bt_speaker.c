@@ -44,7 +44,7 @@
 #include <bluetooth.h>
 #include <sdp.h>
 
-#include "../virtual_utils.h"
+#include "../utils.h"
 
 #include "avdtp_signal.h"
 #include "backend_bt.h"

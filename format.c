@@ -29,7 +29,7 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "virtual_int.h"
+#include "int.h"
 
 void
 format_import(uint32_t fmt, const uint8_t *src, uint32_t len,

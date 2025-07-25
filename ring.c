@@ -33,7 +33,7 @@
 #include <errno.h>
 #include <time.h>
 
-#include "virtual_int.h"
+#include "int.h"
 
 int
 vring_alloc(struct virtual_ring *pvr, size_t size)

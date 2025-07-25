@@ -28,7 +28,7 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "virtual_int.h"
+#include "int.h"
 
 #ifndef VOSS_X3_LOG2_COMBA
 #define	VOSS_X3_LOG2_COMBA 5

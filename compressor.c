@@ -28,7 +28,7 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "virtual_int.h"
+#include "int.h"
 #include "virtual_oss.h"
 
 struct virtual_compressor voss_output_compressor_param = {

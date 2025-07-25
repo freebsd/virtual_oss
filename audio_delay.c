@@ -34,7 +34,7 @@
 #include <math.h>
 #include <sysexits.h>
 
-#include "virtual_int.h"
+#include "int.h"
 
 #define	REF_FREQ 500	/* HZ */
 

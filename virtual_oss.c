@@ -36,8 +36,8 @@
 #include <time.h>
 #include <assert.h>
 
-#include "virtual_int.h"
-#include "virtual_backend.h"
+#include "backend.h"
+#include "int.h"
 
 uint64_t
 virtual_oss_delay_ns(void)

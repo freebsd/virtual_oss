@@ -33,7 +33,7 @@
 #include <stdarg.h>
 #include <fcntl.h>
 
-#include "virtual_utils.h"
+#include "utils.h"
 #include "virtual_oss.h"
 
 static void

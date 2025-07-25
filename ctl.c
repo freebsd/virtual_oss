@@ -32,8 +32,7 @@
 
 #include <cuse.h>
 
-#include "virtual_int.h"
-
+#include "int.h"
 #include "virtual_oss.h"
 
 int64_t	voss_output_peak[VMAX_CHAN];

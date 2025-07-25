@@ -40,8 +40,8 @@
 #include <bluetooth.h>
 #include <sdp.h>
 
-#include "../virtual_int.h"
-#include "../virtual_backend.h"
+#include "../backend.h"
+#include "../int.h"
 
 #include "avdtp_signal.h"
 #include "backend_bt.h"
