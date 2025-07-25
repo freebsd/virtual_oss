@@ -83,18 +83,14 @@ sndio_get_endianness_is_le(int *fmt)
 static int
 sndio_get_bits(int *fmt)
 {
-	if (*fmt & (AFMT_S16_LE | AFMT_U16_LE | AFMT_S16_BE | AFMT_U16_BE)) {
+	if (*fmt & AFMT_16BIT)
 		return (16);
-	}
-	if (*fmt & (AFMT_S24_LE | AFMT_U24_LE | AFMT_S24_BE | AFMT_U24_BE)) {
+	if (*fmt & AFMT_24BIT)
 		return (24);
-	}
-	if (*fmt & (AFMT_S32_LE | AFMT_U32_LE | AFMT_S32_BE | AFMT_U32_BE)) {
+	if (*fmt & AFMT_32BIT)
 		return (32);
-	}
-	if (*fmt & (AFMT_S8 | AFMT_U8)) {
+	if (*fmt & AFMT_8BIT)
 		return (8);
-	}
 	return (-1);
 }
 

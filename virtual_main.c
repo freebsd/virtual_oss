@@ -92,17 +92,16 @@ vclient_sample_bytes(vclient_t *pvc)
 {
 	uint32_t fmt = pvc->format;
 
-	if (fmt & (AFMT_S16_BE | AFMT_S16_LE | AFMT_U16_BE | AFMT_U16_LE)) {
+	if (fmt & AFMT_16BIT)
 		return (2);
-	} else if (fmt & (AFMT_S24_BE | AFMT_S24_LE | AFMT_U24_BE | AFMT_U24_LE)) {
+	else if (fmt & AFMT_24BIT)
 		return (3);
-	} else if (fmt & (AFMT_S32_BE | AFMT_S32_LE | AFMT_U32_BE | AFMT_U32_LE)) {
+	else if (fmt & AFMT_32BIT)
 		return (4);
-	} else if (fmt & (AFMT_U8 | AFMT_S8)) {
+	else if (fmt & AFMT_8BIT)
 		return (1);
-	} else {
+	else
 		return (0);
-	}
 }
 
 static uint32_t
