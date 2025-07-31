@@ -35,8 +35,8 @@
 #include <err.h>
 #include <time.h>
 
-#include "../backend.h"
-#include "../int.h"
+#include "../virtual_oss/backend.h"
+#include "../virtual_oss/int.h"
 
 static void
 null_close(struct voss_backend *pbe)

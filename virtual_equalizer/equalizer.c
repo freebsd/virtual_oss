@@ -35,7 +35,6 @@
 #include <fftw3.h>
 #include <getopt.h>
 #include <math.h>
-#include <pthread.h>
 #include <stdarg.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -43,7 +42,6 @@
 #include <sysexits.h>
 #include <unistd.h>
 
-#include "utils.h"
 #include "virtual_oss.h"
 
 struct Equalizer {
@@ -271,7 +269,7 @@ usage()
 }
 
 int
-equalizer_main(int argc, char **argv)
+main(int argc, char **argv)
 {
 	struct virtual_oss_fir_filter fir = {};
 	struct virtual_oss_io_info info = {};

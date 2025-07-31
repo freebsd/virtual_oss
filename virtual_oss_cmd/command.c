@@ -33,7 +33,6 @@
 #include <stdarg.h>
 #include <fcntl.h>
 
-#include "utils.h"
 #include "virtual_oss.h"
 
 static void
@@ -54,7 +53,7 @@ usage()
 }
 
 int
-command_main(int argc, char **argv)
+main(int argc, char **argv)
 {
 	char options[VIRTUAL_OSS_OPTIONS_MAX] = {};
 	size_t offset = 0;

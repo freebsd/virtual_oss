@@ -35,8 +35,8 @@
 #include <err.h>
 #include <poll.h>
 
-#include "../backend.h"
-#include "../int.h"
+#include "../virtual_oss/backend.h"
+#include "../virtual_oss/int.h"
 
 static int
 oss_set_format(int fd, int *format)

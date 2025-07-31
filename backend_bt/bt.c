@@ -40,11 +40,11 @@
 #include <bluetooth.h>
 #include <sdp.h>
 
-#include "../backend.h"
-#include "../int.h"
+#include "../virtual_oss/backend.h"
+#include "../virtual_oss/int.h"
 
 #include "avdtp_signal.h"
-#include "backend_bt.h"
+#include "bt.h"
 
 #define	DPRINTF(...) printf("backend_bt: " __VA_ARGS__)
 
@@ -675,95 +675,6 @@ av_error_0:
 		return (-1);
 	}
 	return (0);
-}
-
-int
-bt_receive(struct bt_config *cfg, void *ptr, int len, int use_delay)
-{
-	struct sbc_header *phdr = (struct sbc_header *)cfg->mtu_data;
-	struct sbc_encode *sbc = cfg->handle.sbc_enc;
-	int old_len = len;
-	int delta;
-	int err;
-	int i;
-
-	/* wait for service interval, if any */
-	if (use_delay)
-		virtual_oss_wait();
-
-	switch (cfg->blocks) {
-	case BLOCKS_4:
-		sbc->blocks = 4;
-		break;
-	case BLOCKS_8:
-		sbc->blocks = 8;
-		break;
-	case BLOCKS_12:
-		sbc->blocks = 12;
-		break;
-	default:
-		sbc->blocks = 16;
-		break;
-	}
-
-	switch (cfg->bands) {
-	case BANDS_4:
-		sbc->bands = 4;
-		break;
-	default:
-		sbc->bands = 8;
-		break;
-	}
-
-	if (cfg->chmode != MODE_MONO) {
-		sbc->channels = 2;
-	} else {
-		sbc->channels = 1;
-	}
-
-	while (1) {
-		delta = len & ~1;
-		if (delta > (int)(2 * sbc->rem_len))
-			delta = (2 * sbc->rem_len);
-
-		/* copy out samples, if any */
-		memcpy(ptr, (char *)sbc->music_data + sbc->rem_off, delta);
-		ptr += delta;
-		len -= delta;
-		sbc->rem_off += delta / 2;
-		sbc->rem_len -= delta / 2;
-		if (len == 0)
-			break;
-
-		if (sbc->rem_len == 0 &&
-		    sbc->rem_data_frames != 0) {
-			err = sbc_decode_frame(cfg, sbc->rem_data_len * 8);
-			sbc->rem_data_frames--;
-			sbc->rem_data_ptr += err;
-			sbc->rem_data_len -= err;
-			continue;
-		}
-		/* TODO: Support fragmented SBC frames */
-		err = read(cfg->fd, cfg->mtu_data, cfg->mtu);
-
-		if (err == 0) {
-			break;
-		} else if (err < 0) {
-			if (errno == EAGAIN || errno == EWOULDBLOCK)
-				break;
-			else
-				return (-1);	/* disconnected */
-		}
-
-		/* verify RTP header */
-		if (err < (int)sizeof(*phdr) || phdr->id != 0x80)
-			continue;
-
-		sbc->rem_data_frames = phdr->numFrames;
-		sbc->rem_data_ptr = (uint8_t *)(phdr + 1);
-		sbc->rem_data_len = err - sizeof(*phdr);
-	}
-	return (old_len - len);
 }
 
 static int
